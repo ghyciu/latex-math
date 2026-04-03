@@ -1,0 +1,8 @@
+[package]
+name = "latex-equation"
+version = "0.1.0"
+edition = "2024"
+authors = ["ghyciu"]
+description = "Command-line interface (CLI) tool for processing LaTeX equations"
+
+[dependencies]
