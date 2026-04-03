@@ -1,4 +1,6 @@
-use crate::token::{Number, Token, TokenRenderable};
+use crate::ast::{ASTNodePrefix, ASTString};
+use super::EquationRenderable;
+use crate::token::{Number, Token, TokenRenderable, TokenStringList};
 
 #[derive(Debug)]
 pub struct Equation {
@@ -42,13 +44,25 @@ impl Equation {
 				}
 			}
 		}
+		tokens
+	}
+}
 
-		return tokens;
+impl EquationRenderable for Equation {
+	fn as_token_string_list(&self) -> TokenStringList {
+		let mut token_string_list: TokenStringList = TokenStringList::new();
+		for token in self.tokens.iter() {
+			token_string_list.push(token.as_token_string());
+		}
+		token_string_list
 	}
 
-	pub fn print_tokens(&self) {
-		for token in &self.tokens {
-			println!("{}", token.as_token_string());
+	fn as_ast_string(&self) -> ASTString {
+		let mut ast_string: ASTString = ASTString::new();
+		for (index, token) in self.tokens.iter().enumerate() {
+			let is_last: bool = index == self.tokens.len() - 1;
+			ast_string.push(token.as_ast_node_string(ASTNodePrefix::new(), is_last));
 		}
+		return ast_string;
 	}
 }
