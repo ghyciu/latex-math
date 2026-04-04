@@ -1,4 +1,4 @@
-use crate::ast::{ASTNode, ASTParser};
+use crate::ast::{ASTNode, ASTNodePrefix, ASTNodeRenderable, ASTParser};
 use super::EquationRenderable;
 use crate::token::{Number, Operator, OperatorType, Token, TokenRenderable, TokenStringList};
 
@@ -56,7 +56,7 @@ impl Equation {
 	pub fn print_tree(&self) {
 		let mut ast_parser: ASTParser = ASTParser::new(self.tokens.clone());
 		let ast_node: ASTNode = ast_parser.parse();
-		print!("{:#?}", ast_node);
+		print!("{}", ast_node.as_ast_node_string(ASTNodePrefix::new(), true));
 	}
 }
 

@@ -9,7 +9,7 @@ impl Number {
 		Number(number)
 	}
 
-	fn get(&self) -> &String {
+	pub fn get(&self) -> &String {
 		&self.0
 	}
 }
