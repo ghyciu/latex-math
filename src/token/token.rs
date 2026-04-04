@@ -1,6 +1,6 @@
 use super::{Number, TokenString, TokenRenderable, Operator};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Token {
 	Number(Number),
 	Operator(Operator)

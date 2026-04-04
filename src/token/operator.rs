@@ -1,19 +1,13 @@
 use super::{OperatorType, Token, TokenRenderable, TokenString};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Operator {
 	operator_type: OperatorType,
-	left: Option<Box<Token>>,
-	right: Option<Box<Token>>
 }
 
 impl Operator {
 	pub fn new(operator_type: OperatorType) -> Operator {
-		Operator {
-			operator_type,
-			left: None,
-			right: None
-		}
+		Operator { operator_type }
 	}
 
 	fn get(&self) -> &OperatorType {

@@ -1,6 +1,7 @@
 use super::{TokenRenderable, TokenString};
 
 #[derive(Debug)]
+#[derive(Clone)]
 pub struct Number(String);
 
 impl Number {
