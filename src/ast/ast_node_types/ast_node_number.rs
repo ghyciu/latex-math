@@ -11,14 +11,7 @@ impl ASTNodeNumber {
 }
 
 impl ASTNodeRenderable for ASTNodeNumber {
-	fn as_ast_node_string(&self, prefix: ASTNodePrefix, is_last: bool) -> ASTNodeString {
-		let connector: String = if prefix.is_empty() {
-			String::from("")
-		} else if is_last {
-			String::from("└── ")
-		} else {
-			String::from("├── ")
-		};
-		ASTNodeString::new(format!("{}{}Number({})\n", prefix, connector, self.0.get()))
+	fn to_ast_node_string(&self, prefix: ASTNodePrefix, is_last: bool) -> ASTNodeString {
+		ASTNodeString::new(prefix.clone(), is_last, format!("Number({})", self.0.get()))
 	}
 }
