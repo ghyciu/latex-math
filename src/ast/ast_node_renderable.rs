@@ -1,6 +1,6 @@
 use crate::ast::ast_node_string::ASTNodeString;
-use crate::ast::ASTNodePrefix;
+use crate::ast::ASTNodeStringPrefix;
 
 pub trait ASTNodeRenderable {
-	fn to_ast_node_string(&self, prefix: ASTNodePrefix, is_last: bool) -> ASTNodeString;
+	fn to_ast_node_string(&self, prefix: ASTNodeStringPrefix) -> ASTNodeString;
 }

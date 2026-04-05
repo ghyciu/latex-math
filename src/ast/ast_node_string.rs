@@ -1,16 +1,15 @@
 use std::fmt::Display;
-use crate::ast::ASTNodePrefix;
+use crate::ast::ASTNodeStringPrefix;
 
 pub struct ASTNodeString {
-	prefix: ASTNodePrefix,
-	is_last: bool,
+	prefix: ASTNodeStringPrefix,
 	string: String,
 }
 
 impl ASTNodeString {
-	pub fn new(prefix: ASTNodePrefix, is_last: bool, string: String) -> ASTNodeString {
+	pub fn new(prefix: ASTNodeStringPrefix, string: String) -> ASTNodeString {
 		ASTNodeString {
-			prefix, is_last,
+			prefix,
 			string: format!("{}\n", string)
 		}
 	}
@@ -22,13 +21,6 @@ impl ASTNodeString {
 
 impl Display for ASTNodeString {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		let connector: String = if self.prefix.is_empty() {
-			String::from("")
-		} else if self.is_last {
-			String::from("└── ")
-		} else {
-			String::from("├── ")
-		};
-		write!(f, "{}{}{}", self.prefix, connector, self.string)
+		write!(f, "{}{}", self.prefix, self.string)
 	}
 }

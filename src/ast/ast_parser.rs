@@ -1,4 +1,4 @@
-use crate::ast::ast_node_types::{ASTNodeBinary, ASTNodeNumber};
+use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber};
 use crate::ast::ASTNode;
 use crate::token::Token;
 
