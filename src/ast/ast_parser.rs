@@ -33,7 +33,7 @@ impl ASTParser {
 		let mut ast_node: ASTNode = self.parse_factor();
 		while let Some(token) = self.get() {
 			match token {
-				Token::Operator(operator) => {
+				Token::Operator(_operator) => {
 					let operator = self.next().unwrap();
 					let right = self.parse_factor();
 					ast_node = ASTNode::Binary(ASTNodeBinary::new(Box::new(ast_node), operator, Box::new(right)))

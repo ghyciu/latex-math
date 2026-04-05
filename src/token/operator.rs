@@ -1,4 +1,4 @@
-use super::{OperatorType, Token, TokenRenderable, TokenString};
+use super::{OperatorType, TokenRenderable, TokenString};
 
 #[derive(Debug, Clone)]
 pub struct Operator {

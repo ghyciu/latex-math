@@ -1,6 +1,6 @@
 use std::fmt::Display;
 use crate::token::Token;
-use super::{ASTNode, ASTNodeStringPrefix, ASTNodeRenderable, ASTParser};
+use super::{ASTNode, ASTParser};
 
 pub struct ASTString(ASTNode);
 
@@ -14,6 +14,7 @@ impl ASTString {
 
 impl Display for ASTString {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		write!(f, "{}", self.0.to_ast_node_string(ASTNodeStringPrefix::new()))
+		write!(f, "{}", self.0.to_ast_node_string())?;
+		Ok({})
 	}
 }

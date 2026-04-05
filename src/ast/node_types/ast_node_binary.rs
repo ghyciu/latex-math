@@ -1,11 +1,11 @@
-use crate::ast::{ASTNode, ASTNodeStringPrefix, ASTNodeRenderable, ASTNodeString};
-use crate::token::Token;
+use crate::ast::{ASTNode, ASTNodeRenderable};
+use crate::token::{Token, TokenRenderable};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ASTNodeBinary {
-	left: Box<ASTNode>,
+	pub(crate) left: Box<ASTNode>,
 	operator: Token,
-	right: Box<ASTNode>
+	pub(crate) right: Box<ASTNode>
 }
 
 impl ASTNodeBinary {
@@ -17,15 +17,7 @@ impl ASTNodeBinary {
 }
 
 impl ASTNodeRenderable for ASTNodeBinary {
-	fn to_ast_node_string(&self, prefix: ASTNodeStringPrefix) -> ASTNodeString {
-		let mut ast_node_string: ASTNodeString = ASTNodeString::new(prefix.clone(), String::from("Operator(+)"));
-		let children = [&*self.left, &*self.right];
-		for (i, child) in children.iter().enumerate() {
-			let is_last: bool = i == children.len() - 1;
-			let child_prefix: ASTNodeStringPrefix = prefix.child(is_last);
-			ast_node_string.push(child.to_ast_node_string(child_prefix));
-		}
-
-		ast_node_string
+	fn get_name(&self) -> String {
+		self.operator.as_token_string().to_string()
 	}
 }

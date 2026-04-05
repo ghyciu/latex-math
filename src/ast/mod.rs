@@ -3,8 +3,8 @@ mod node_types;
 mod ast_parser;
 mod ast_node_string_prefix;
 mod ast_node_string;
-mod ast_node_renderable;
 mod ast_string;
+mod ast_node_renderable;
 
 pub use ast_node::ASTNode;
 pub use ast_node_string_prefix::ASTNodeStringPrefix;

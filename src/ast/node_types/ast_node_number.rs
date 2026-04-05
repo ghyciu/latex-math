@@ -1,7 +1,7 @@
-use crate::ast::{ASTNodeStringPrefix, ASTNodeRenderable, ASTNodeString};
-use crate::token::Number;
+use crate::ast::ASTNodeRenderable;
+use crate::token::{Number, TokenRenderable};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ASTNodeNumber(Number);
 
 impl ASTNodeNumber {
@@ -11,7 +11,7 @@ impl ASTNodeNumber {
 }
 
 impl ASTNodeRenderable for ASTNodeNumber {
-	fn to_ast_node_string(&self, prefix: ASTNodeStringPrefix) -> ASTNodeString {
-		ASTNodeString::new(prefix.clone(), format!("Number({})", self.0.get()))
+	fn get_name(&self) -> String {
+		self.0.as_token_string().to_string()
 	}
 }

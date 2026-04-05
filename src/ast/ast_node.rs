@@ -1,17 +1,23 @@
-use crate::ast::{ASTNodeStringPrefix, ASTNodeRenderable, ASTNodeString};
+use crate::ast::{ASTNodeRenderable, ASTNodeString, ASTNodeStringPrefix};
 use super::node_types::{ASTNodeNumber, ASTNodeBinary};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum ASTNode {
 	Number(ASTNodeNumber),
 	Binary(ASTNodeBinary)
 }
 
+impl ASTNode {
+	pub fn to_ast_node_string(&self) -> ASTNodeString {
+		ASTNodeString::new(ASTNodeStringPrefix::new(), self.clone())
+	}
+}
+
 impl ASTNodeRenderable for ASTNode {
-	fn to_ast_node_string(&self, ast_node_prefix: ASTNodeStringPrefix) -> ASTNodeString {
+	fn get_name(&self) -> String {
 		match self {
-			ASTNode::Number(number) => number.to_ast_node_string(ast_node_prefix),
-			ASTNode::Binary(binary) => binary.to_ast_node_string(ast_node_prefix)
+			ASTNode::Number(number) => number.get_name(),
+			ASTNode::Binary(binary) => binary.get_name()
 		}
 	}
 }
