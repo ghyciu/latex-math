@@ -1,11 +1,12 @@
 use crate::ast::ASTNodeRenderable;
-use crate::token::{Number, TokenRenderable};
+use crate::token::TokenRenderable;
+use crate::token::types::TokenNumber;
 
-#[derive(Debug, Clone)]
-pub struct ASTNodeNumber(Number);
+#[derive(Debug)]
+pub struct ASTNodeNumber(TokenNumber);
 
 impl ASTNodeNumber {
-	pub fn new(number: Number) -> ASTNodeNumber {
+	pub fn new(number: TokenNumber) -> ASTNodeNumber {
 		ASTNodeNumber(number)
 	}
 }

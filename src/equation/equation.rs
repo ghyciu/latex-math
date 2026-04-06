@@ -1,6 +1,7 @@
 use super::EquationRenderable;
 use crate::ast::ASTString;
-use crate::token::{Number, Operator, OperatorType, Token, TokenRenderable, TokenStringList};
+use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+use crate::token::{Token, TokenListString, TokenRenderable};
 
 #[derive(Debug)]
 pub struct Equation {
@@ -35,12 +36,12 @@ impl Equation {
 						number_token.push(chars[i]);
 						i += 1;
 					}
-					tokens.push(Token::Number(Number::new(number_token)))
+					tokens.push(Token::Number(TokenNumber::new(number_token)))
 				}
 
 				// Operator
 				'+' => {
-					tokens.push(Token::Operator(Operator::new(OperatorType::Add)));
+					tokens.push(Token::Operator(TokenOperator::new(TokenOperatorType::Add)));
 					i += 1;
 				}
 
@@ -55,8 +56,8 @@ impl Equation {
 }
 
 impl EquationRenderable for Equation {
-	fn to_token_string_list(&self) -> TokenStringList {
-		let mut token_string_list: TokenStringList = TokenStringList::new();
+	fn to_token_string_list(&self) -> TokenListString {
+		let mut token_string_list: TokenListString = TokenListString::new();
 		for token in self.tokens.iter() {
 			token_string_list.push(token.as_token_string());
 		}

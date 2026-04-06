@@ -1,9 +1,10 @@
-use super::{Number, Operator, TokenRenderable, TokenString};
+use super::{TokenRenderable, TokenString};
+use crate::token::types::{TokenNumber, TokenOperator};
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum Token {
-	Number(Number),
-	Operator(Operator),
+	Number(TokenNumber),
+	Operator(TokenOperator),
 }
 
 impl TokenRenderable for Token {
