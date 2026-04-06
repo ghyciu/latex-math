@@ -1,9 +1,9 @@
-use super::{Number, TokenString, TokenRenderable, Operator};
+use super::{Number, Operator, TokenRenderable, TokenString};
 
 #[derive(Debug, Clone)]
 pub enum Token {
 	Number(Number),
-	Operator(Operator)
+	Operator(Operator),
 }
 
 impl TokenRenderable for Token {

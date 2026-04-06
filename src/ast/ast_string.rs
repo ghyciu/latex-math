@@ -1,6 +1,6 @@
-use std::fmt::Display;
-use crate::token::Token;
 use super::{ASTNode, ASTParser};
+use crate::token::Token;
+use std::fmt::Display;
 
 pub struct ASTString(ASTNode);
 

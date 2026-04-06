@@ -1,10 +1,10 @@
+use super::node_types::{ASTNodeBinary, ASTNodeNumber};
 use crate::ast::{ASTNodeRenderable, ASTNodeString, ASTNodeStringPrefix};
-use super::node_types::{ASTNodeNumber, ASTNodeBinary};
 
 #[derive(Debug)]
 pub enum ASTNode {
 	Number(ASTNodeNumber),
-	Binary(ASTNodeBinary)
+	Binary(ASTNodeBinary),
 }
 
 impl ASTNode {
@@ -17,7 +17,7 @@ impl ASTNodeRenderable for ASTNode {
 	fn get_name(&self) -> String {
 		match self {
 			ASTNode::Number(number) => number.get_name(),
-			ASTNode::Binary(binary) => binary.get_name()
+			ASTNode::Binary(binary) => binary.get_name(),
 		}
 	}
 }

@@ -1,5 +1,5 @@
-use std::env::args;
 use latex_equation::equation::{Equation, EquationRenderable};
+use std::env::args;
 
 fn main() {
 	let args: Vec<String> = args().collect();

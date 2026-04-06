@@ -1,10 +1,10 @@
-use crate::ast::{ASTString};
 use super::EquationRenderable;
+use crate::ast::ASTString;
 use crate::token::{Number, Operator, OperatorType, Token, TokenRenderable, TokenStringList};
 
 #[derive(Debug)]
 pub struct Equation {
-	tokens: Vec<Token>
+	tokens: Vec<Token>,
 }
 
 impl Equation {

@@ -1,18 +1,15 @@
-use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber};
 use crate::ast::ASTNode;
+use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber};
 use crate::token::Token;
 
 pub struct ASTParser<'a> {
 	tokens: &'a Vec<Token>,
-	pos: usize
+	pos: usize,
 }
 
 impl<'a> ASTParser<'a> {
 	pub fn new(tokens: &'a Vec<Token>) -> ASTParser<'a> {
-		ASTParser {
-			tokens,
-			pos: 0
-		}
+		ASTParser { tokens, pos: 0 }
 	}
 
 	fn get(&self) -> Option<&Token> {
@@ -36,9 +33,13 @@ impl<'a> ASTParser<'a> {
 				Token::Operator(_operator) => {
 					let operator = self.next().unwrap();
 					let right = self.parse_factor();
-					ast_node = ASTNode::Binary(ASTNodeBinary::new(Box::new(ast_node), operator, Box::new(right)))
-				},
-				_ => break
+					ast_node = ASTNode::Binary(ASTNodeBinary::new(
+						Box::new(ast_node),
+						operator,
+						Box::new(right),
+					))
+				}
+				_ => break,
 			}
 		}
 		ast_node
@@ -47,7 +48,7 @@ impl<'a> ASTParser<'a> {
 	fn parse_factor(&mut self) -> ASTNode {
 		match self.next() {
 			Some(Token::Number(number)) => ASTNode::Number(ASTNodeNumber::new(number)),
-			_ => panic!()
+			_ => panic!(),
 		}
 	}
 }

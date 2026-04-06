@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter, Result};
 use crate::token::TokenString;
+use std::fmt::{Display, Formatter, Result};
 
 pub struct TokenStringList(Vec<TokenString>);
 

@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 #[derive(Debug, Clone)]
 pub enum OperatorType {
-	Add
+	Add,
 }
 
 impl Display for OperatorType {
