@@ -2,13 +2,13 @@ use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber};
 use crate::ast::ASTNode;
 use crate::token::Token;
 
-pub struct ASTParser {
-	tokens: Vec<Token>,
+pub struct ASTParser<'a> {
+	tokens: &'a Vec<Token>,
 	pos: usize
 }
 
-impl ASTParser {
-	pub fn new(tokens: Vec<Token>) -> ASTParser {
+impl<'a> ASTParser<'a> {
+	pub fn new(tokens: &'a Vec<Token>) -> ASTParser<'a> {
 		ASTParser {
 			tokens,
 			pos: 0

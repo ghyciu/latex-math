@@ -64,6 +64,6 @@ impl EquationRenderable for Equation {
 	}
 
 	fn to_ast_string(&self) -> ASTString {
-		ASTString::new(self.tokens.clone())
+		ASTString::new(&self.tokens)
 	}
 }

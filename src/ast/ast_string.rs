@@ -5,7 +5,7 @@ use super::{ASTNode, ASTParser};
 pub struct ASTString(ASTNode);
 
 impl ASTString {
-	pub fn new(tokens: Vec<Token>) -> ASTString {
+	pub fn new(tokens: &Vec<Token>) -> ASTString {
 		let mut ast_parser: ASTParser = ASTParser::new(tokens);
 		let root: ASTNode = ast_parser.parse();
 		ASTString(root)

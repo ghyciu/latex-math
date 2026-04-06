@@ -1,11 +1,11 @@
 use crate::ast::{ASTNode, ASTNodeRenderable};
 use crate::token::{Token, TokenRenderable};
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct ASTNodeBinary {
-	pub(crate) left: Box<ASTNode>,
+	left: Box<ASTNode>,
 	operator: Token,
-	pub(crate) right: Box<ASTNode>
+	right: Box<ASTNode>
 }
 
 impl ASTNodeBinary {
@@ -13,6 +13,14 @@ impl ASTNodeBinary {
 		ASTNodeBinary {
 			left, operator, right
 		}
+	}
+
+	pub fn get_left(&self) -> &ASTNode {
+		&self.left
+	}
+
+	pub fn get_right(&self) -> &ASTNode {
+		&self.right
 	}
 }
 

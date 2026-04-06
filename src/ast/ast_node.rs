@@ -1,15 +1,15 @@
 use crate::ast::{ASTNodeRenderable, ASTNodeString, ASTNodeStringPrefix};
 use super::node_types::{ASTNodeNumber, ASTNodeBinary};
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum ASTNode {
 	Number(ASTNodeNumber),
 	Binary(ASTNodeBinary)
 }
 
 impl ASTNode {
-	pub fn to_ast_node_string(&self) -> ASTNodeString {
-		ASTNodeString::new(ASTNodeStringPrefix::new(), self.clone())
+	pub fn to_ast_node_string(&self) -> ASTNodeString<'_> {
+		ASTNodeString::new(ASTNodeStringPrefix::new(), self)
 	}
 }
 
