@@ -1,0 +1,61 @@
+name: Master PR Quality Gate
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-test-coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache cargo registry
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: cargo-registry-
+
+      - name: Cache cargo build
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: cargo-build-${{ github.sha }}
+          restore-keys: |
+            cargo-build-
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+
+      - name: Build
+        run: cargo build --verbose
+
+      - name: Run tests
+        run: cargo test --verbose
+
+      - name: Run coverage (fail if < 90%)
+        run: |
+          cargo tarpaulin --verbose --all-features --workspace --timeout 120 --out Xml
+
+          # Extract coverage percentage
+          COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' cobertura.xml | head -1)
+          COVERAGE_PERCENT=$(echo "$COVERAGE * 100" | bc | cut -d'.' -f1)
+
+          echo "Coverage: $COVERAGE_PERCENT%"
+
+          if [ "$COVERAGE_PERCENT" -lt 90 ]; then
+            echo "Coverage is below 90%"
+            exit 1
+          fi
