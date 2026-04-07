@@ -1,6 +1,6 @@
 use crate::token::{TokenRenderable, TokenString};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TokenNumber(String);
 
 impl TokenNumber {

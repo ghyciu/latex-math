@@ -1,7 +1,7 @@
 use crate::token::types::TokenOperatorType;
 use crate::token::{TokenRenderable, TokenString};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct TokenOperator {
 	operator_type: TokenOperatorType,
 }

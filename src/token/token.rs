@@ -1,7 +1,7 @@
 use super::{TokenRenderable, TokenString};
 use crate::token::types::{TokenNumber, TokenOperator};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Token {
 	Number(TokenNumber),
 	Operator(TokenOperator),
