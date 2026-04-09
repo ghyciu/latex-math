@@ -1,4 +1,4 @@
-use latex_equation::equation::{Equation, EquationRenderable};
+use latex_math::equation::{Equation, EquationRenderable};
 use std::env::args;
 
 fn main() {
