@@ -1,5 +1,6 @@
-use super::TokenString;
+use super::{TokenName, TokenValue};
 
 pub trait TokenRenderable {
-	fn as_token_string(&self) -> TokenString;
+	fn get_value(&self) -> TokenValue;
+	fn get_name(&self) -> TokenName;
 }

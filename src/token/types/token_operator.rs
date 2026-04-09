@@ -1,5 +1,5 @@
 use crate::token::types::TokenOperatorType;
-use crate::token::{TokenRenderable, TokenString};
+use crate::token::{TokenRenderable, TokenName, TokenValue};
 
 #[derive(Debug, Clone)]
 pub struct TokenOperator {
@@ -11,7 +11,7 @@ impl TokenOperator {
 		TokenOperator { operator_type }
 	}
 
-	fn get(&self) -> &TokenOperatorType {
+	fn get_type(&self) -> &TokenOperatorType {
 		match self.operator_type {
 			TokenOperatorType::Add => &TokenOperatorType::Add,
 		}
@@ -19,7 +19,11 @@ impl TokenOperator {
 }
 
 impl TokenRenderable for TokenOperator {
-	fn as_token_string(&self) -> TokenString {
-		TokenString::new(format!("Operator({})", self.get()))
+	fn get_value(&self) -> TokenValue {
+		TokenValue::new(self.get_type().to_string())
+	}
+
+	fn get_name(&self) -> TokenName {
+		TokenName::new(format!("Operator({})", self.get_value().to_string()))
 	}
 }

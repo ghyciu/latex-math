@@ -1,4 +1,4 @@
-use super::{TokenRenderable, TokenString};
+use super::{TokenRenderable, TokenName, TokenValue};
 use crate::token::types::{TokenNumber, TokenOperator};
 
 #[derive(Debug, Clone)]
@@ -8,10 +8,17 @@ pub enum Token {
 }
 
 impl TokenRenderable for Token {
-	fn as_token_string(&self) -> TokenString {
+	fn get_value(&self) -> TokenValue {
 		match self {
-			Token::Number(number) => number.as_token_string(),
-			Token::Operator(operator) => operator.as_token_string(),
+			Token::Number(number) => number.get_value(),
+			Token::Operator(operator) => operator.get_value(),
+		}
+	}
+	
+	fn get_name(&self) -> TokenName {
+		match self {
+			Token::Number(number) => number.get_name(),
+			Token::Operator(operator) => operator.get_name(),
 		}
 	}
 }

@@ -18,7 +18,7 @@ impl<'a> Display for ASTNodeString<'a> {
 		match &self.node {
 			ASTNode::Number(number) => {
 				write!(f, "{}{}\n", self.prefix, number.get_name())?;
-			}
+			},
 			ASTNode::Binary(binary) => {
 				let left_string: ASTNodeString =
 					ASTNodeString::new(self.prefix.child(false), binary.get_left());
@@ -32,6 +32,10 @@ impl<'a> Display for ASTNodeString<'a> {
 					left_string,
 					right_string
 				)?;
+			},
+			ASTNode::Unary(unary) => {
+				let child_string: ASTNodeString = ASTNodeString::new(self.prefix.child(true), unary.get_child());
+				write!(f, "{}{}\n{}", self.prefix, unary.get_name(), child_string)?;
 			}
 		}
 		Ok({})

@@ -1,6 +1,6 @@
 use super::EquationRenderable;
 use crate::ast::ASTString;
-use crate::token::{Token, TokenListString, TokenParser, TokenRenderable};
+use crate::token::{Token, TokenNameList, TokenParser, TokenRenderable};
 
 #[derive(Debug)]
 pub struct Equation {
@@ -21,12 +21,12 @@ impl Equation {
 }
 
 impl EquationRenderable for Equation {
-	fn to_token_string_list(&self) -> TokenListString {
-		let mut token_string_list: TokenListString = TokenListString::new();
+	fn to_token_name_list(&self) -> TokenNameList {
+		let mut token_name_list: TokenNameList = TokenNameList::new();
 		for token in self.tokens.iter() {
-			token_string_list.push(token.as_token_string());
+			token_name_list.push(token.get_name());
 		}
-		token_string_list
+		token_name_list
 	}
 
 	fn to_ast_string(&self) -> ASTString {

@@ -1,4 +1,4 @@
-use crate::token::{TokenRenderable, TokenString};
+use crate::token::{TokenRenderable, TokenName, TokenValue};
 
 #[derive(Debug, Clone)]
 pub struct TokenNumber(String);
@@ -14,7 +14,11 @@ impl TokenNumber {
 }
 
 impl TokenRenderable for TokenNumber {
-	fn as_token_string(&self) -> TokenString {
-		TokenString::new(format!("Number({})", self.get()))
+	fn get_value(&self) -> TokenValue {
+		TokenValue::new(self.get().clone())
+	}
+
+	fn get_name(&self) -> TokenName {
+		TokenName::new(format!("Number({})", self.get_value().to_string()))
 	}
 }

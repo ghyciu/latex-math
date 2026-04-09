@@ -1,4 +1,4 @@
-use crate::ast::{ASTNode, ASTNodeRenderable};
+use crate::ast::{ASTNode, ASTNodeName, ASTNodeRenderable};
 use crate::token::{Token, TokenRenderable};
 
 #[derive(Debug)]
@@ -27,7 +27,8 @@ impl ASTNodeBinary {
 }
 
 impl ASTNodeRenderable for ASTNodeBinary {
-	fn get_name(&self) -> String {
-		self.operator.as_token_string().to_string()
+	fn get_name(&self) -> ASTNodeName {
+		let node_name: String = format!("BinaryOperator({})", self.operator.get_value());
+		ASTNodeName::new(node_name)
 	}
 }

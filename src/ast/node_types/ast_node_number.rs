@@ -1,5 +1,5 @@
-use crate::ast::ASTNodeRenderable;
-use crate::token::TokenRenderable;
+use crate::ast::{ASTNodeName, ASTNodeRenderable};
+use crate::token::{TokenRenderable};
 use crate::token::types::TokenNumber;
 
 #[derive(Debug)]
@@ -12,7 +12,8 @@ impl ASTNodeNumber {
 }
 
 impl ASTNodeRenderable for ASTNodeNumber {
-	fn get_name(&self) -> String {
-		self.0.as_token_string().to_string()
+	fn get_name(&self) -> ASTNodeName {
+		let node_name: String = self.0.get_name().to_string();
+		ASTNodeName::new(node_name)
 	}
 }
