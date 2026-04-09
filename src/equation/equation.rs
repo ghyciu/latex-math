@@ -22,11 +22,7 @@ impl Equation {
 
 impl EquationRenderable for Equation {
 	fn to_token_name_list(&self) -> TokenNameList {
-		let mut token_name_list: TokenNameList = TokenNameList::new();
-		for token in self.tokens.iter() {
-			token_name_list.push(token.get_name());
-		}
-		token_name_list
+		TokenNameList::new(&self.tokens)
 	}
 
 	fn to_ast_string(&self) -> ASTString {
