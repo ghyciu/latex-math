@@ -1,19 +1,25 @@
 use std::fmt::Display;
 
+/// Prefix information used when rendering an AST as a tree.
 #[derive(Debug, Clone)]
 pub struct ASTNodeStringPrefix(Vec<bool>);
 
 impl ASTNodeStringPrefix {
+	/// Creates an empty prefix.
 	pub fn new() -> ASTNodeStringPrefix {
 		ASTNodeStringPrefix(Vec::new())
 	}
 
+	/// Creates a child prefix.
+	///
+	/// The `is_last` flag determines whether the branch is the last child.
 	pub fn child(&self, is_last: bool) -> ASTNodeStringPrefix {
 		let mut levels = self.0.clone();
 		levels.push(is_last);
 		ASTNodeStringPrefix(levels)
 	}
 
+	/// Returns `true` if the prefix contains no levels.
 	pub fn is_empty(&self) -> bool {
 		self.0.is_empty()
 	}

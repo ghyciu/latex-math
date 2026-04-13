@@ -1,6 +1,9 @@
 use crate::ast::{ASTNode, ASTNodeRenderable, ASTNodeStringPrefix};
 use std::fmt::Display;
 
+/// A formatted string representation of an AST subtree.
+///
+/// The output is rendered in a tree-like layout using prefixes and branches.
 #[derive(Clone)]
 pub struct ASTNodeString<'a> {
 	prefix: ASTNodeStringPrefix,
@@ -8,6 +11,7 @@ pub struct ASTNodeString<'a> {
 }
 
 impl<'a> ASTNodeString<'a> {
+	/// Creates a new AST string renderer for a node.
 	pub fn new(prefix: ASTNodeStringPrefix, node: &'a ASTNode) -> ASTNodeString<'a> {
 		ASTNodeString { prefix, node }
 	}

@@ -3,8 +3,10 @@ use super::{EquationErrorRenderable};
 use super::super::EquationResultString;
 use super::types::EmptyEquationError;
 
+/// Errors that can occur while working with equations.
 #[derive(Debug)]
 pub enum EquationError {
+	/// The input equation was empty.
 	EmptyEquationError(EmptyEquationError)
 }
 

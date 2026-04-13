@@ -2,12 +2,17 @@ use crate::ast::ASTNode;
 use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber, ASTNodeUnary};
 use crate::token::Token;
 
+/// Parses a token stream into an AST.
+///
+/// The parser consumes tokens sequentially and builds AST nodes for
+/// numbers, unary operators, and binary operators.
 pub struct ASTParser<'a> {
 	tokens: &'a Vec<Token>,
 	pos: usize,
 }
 
 impl<'a> ASTParser<'a> {
+	/// Creates a new AST parser for the provided token stream.
 	pub fn new(tokens: &'a Vec<Token>) -> ASTParser<'a> {
 		ASTParser { tokens, pos: 0 }
 	}
@@ -22,6 +27,7 @@ impl<'a> ASTParser<'a> {
 		token
 	}
 
+	/// Parses the full token stream into a single AST node.
 	pub fn parse(&mut self) -> ASTNode {
 		self.parse_expression()
 	}

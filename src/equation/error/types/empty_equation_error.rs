@@ -3,6 +3,7 @@ use std::error::Error;
 use super::super::{EquationErrorRenderable};
 use super::super::super::EquationResultString;
 
+/// Error returned when an equation input is empty.
 #[derive(Debug)]
 pub struct EmptyEquationError;
 
