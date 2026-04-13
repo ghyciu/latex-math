@@ -1,4 +1,4 @@
-use super::{EquationError, EquationRenderable, EquationResult};
+use super::{EquationRenderable, EquationResult};
 use crate::ast::ASTString;
 use crate::equation::errors::EmptyEquationError;
 use crate::token::{Token, TokenNameList, TokenParser};
@@ -12,10 +12,10 @@ impl Equation {
 	pub fn new(equation: &String) -> EquationResult {
 		let equation: String = equation.trim().to_string();
 		if equation.is_empty() {
-			return Err(EquationError::EmptyEquationError(EmptyEquationError))
+			return EquationResult::err(EmptyEquationError);
 		}
-		Ok(Equation {
-			tokens: Self::tokenize(equation),
+		EquationResult::ok(Equation {
+			tokens: Equation::tokenize(equation)
 		})
 	}
 
@@ -29,7 +29,6 @@ impl EquationRenderable for Equation {
 	fn to_token_name_list(&self) -> TokenNameList {
 		TokenNameList::new(&self.tokens)
 	}
-
 	fn to_ast_string(&self) -> ASTString {
 		ASTString::new(&self.tokens)
 	}
