@@ -1,7 +1,7 @@
 use super::{EquationRenderable, EquationResult, EquationResultString};
 use crate::ast::ASTString;
 use crate::equation::error::types::EmptyEquationError;
-use crate::token::{Token, TokenNameList, TokenParser, TokenRenderable};
+use crate::token::{Token, TokenNameList, TokenParser};
 
 #[derive(Debug)]
 pub struct Equation {

@@ -2,18 +2,32 @@ use crate::ast::{ASTNodeName, ASTNodeRenderable};
 use crate::token::{TokenRenderable};
 use crate::token::types::TokenNumber;
 
+/// An AST node representing a numeric literal.
 #[derive(Debug)]
 pub struct ASTNodeNumber(TokenNumber);
 
 impl ASTNodeNumber {
+	/// Creates a new numeric AST node.
+	///
+	/// # Parameters
+	///
+	/// - `number` - the numeric token to wrap
+	///
+	/// # Returns
+	///
+	/// A new [`ASTNodeNumber`] instance.
 	pub fn new(number: TokenNumber) -> ASTNodeNumber {
 		ASTNodeNumber(number)
 	}
 }
 
 impl ASTNodeRenderable for ASTNodeNumber {
+	/// Returns the display name for this node.
+	///
+	/// The generated name has the form:
+	/// `Number(<number>)`
 	fn get_name(&self) -> ASTNodeName {
-		let node_name: String = self.0.get_name().to_string();
+		let node_name: String = format!("Number({})", self.0.get_value());
 		ASTNodeName::new(node_name)
 	}
 }

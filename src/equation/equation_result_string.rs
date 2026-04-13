@@ -4,8 +4,7 @@ use crate::token::{Token, TokenRenderable};
 pub struct EquationResultString(String);
 
 impl EquationResultString {
-
-
+	
 	fn new(string: String) -> EquationResultString {
 		EquationResultString(string)
 	}
