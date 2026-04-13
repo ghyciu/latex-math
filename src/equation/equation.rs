@@ -1,6 +1,7 @@
-use super::EquationRenderable;
+use super::{EquationError, EquationRenderable, EquationResult};
 use crate::ast::ASTString;
-use crate::token::{Token, TokenNameList, TokenParser, TokenRenderable};
+use crate::equation::errors::EmptyEquationError;
+use crate::token::{Token, TokenNameList, TokenParser};
 
 #[derive(Debug)]
 pub struct Equation {
@@ -8,10 +9,14 @@ pub struct Equation {
 }
 
 impl Equation {
-	pub fn new(equation: String) -> Equation {
-		Equation {
-			tokens: Self::tokenize(equation),
+	pub fn new(equation: &String) -> EquationResult {
+		let equation: String = equation.trim().to_string();
+		if equation.is_empty() {
+			return Err(EquationError::EmptyEquationError(EmptyEquationError))
 		}
+		Ok(Equation {
+			tokens: Self::tokenize(equation),
+		})
 	}
 
 	fn tokenize(equation: String) -> Vec<Token> {
