@@ -1,6 +1,7 @@
 use std::fmt::{Debug, Display, Formatter};
-use crate::equation::{EquationErrorRenderable, EquationErrorResultString};
-use crate::equation::errors::EmptyEquationError;
+use super::{EquationErrorRenderable};
+use super::super::EquationResultString;
+use super::types::EmptyEquationError;
 
 #[derive(Debug)]
 pub enum EquationError {
@@ -22,10 +23,10 @@ impl Display for EquationError {
 }
 
 impl EquationErrorRenderable for EquationError {
-	fn to_error_result_string(&self) -> EquationErrorResultString {
+	fn to_result_string(&self) -> EquationResultString {
 			match self {
 				EquationError::EmptyEquationError(empty_equation_error) => {
-					empty_equation_error.to_error_result_string()
+					empty_equation_error.to_result_string()
 				}
 			}
 		}

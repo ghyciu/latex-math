@@ -1,6 +1,7 @@
 use std::fmt::{Debug, Display, Formatter};
 use std::error::Error;
-use crate::equation::{EquationErrorRenderable, EquationErrorResultString};
+use super::super::{EquationErrorRenderable};
+use super::super::super::EquationResultString;
 
 #[derive(Debug)]
 pub struct EmptyEquationError;
@@ -14,7 +15,7 @@ impl Display for EmptyEquationError {
 }
 
 impl EquationErrorRenderable for EmptyEquationError {
-	fn to_error_result_string(&self) -> EquationErrorResultString {
-		EquationErrorResultString::new("\n\x1b[1;91mEmptyEquationError:\x1b[0m Equation cannot be empty\n")
+	fn to_result_string(&self) -> EquationResultString {
+		EquationResultString::err("EmptyEquationError", "Equation cannot be empty")
 	}
 }

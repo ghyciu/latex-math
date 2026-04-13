@@ -1,5 +1,6 @@
 use std::fmt::{Display, Formatter};
-use super::{Equation, EquationError, EquationErrorRenderable};
+use super::error::{EquationError, EquationErrorRenderable};
+use super::{Equation, EquationRenderable};
 
 pub struct EquationResult {
 	result: Result<Equation, EquationError>
@@ -22,8 +23,8 @@ impl EquationResult {
 impl Display for EquationResult {
 	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
 		match self.result {
-			Ok(_) => write!(f, "Equation is ok"),
-			Err(ref error) => write!(f, "{}", error.to_error_result_string())
+			Ok(ref equation) => write!(f, "{}", equation.to_result_string()),
+			Err(ref error) => write!(f, "{}", error.to_result_string())
 		}
 	}
 }

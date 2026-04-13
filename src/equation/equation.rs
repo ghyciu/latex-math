@@ -1,7 +1,7 @@
-use super::{EquationRenderable, EquationResult};
+use super::{EquationRenderable, EquationResult, EquationResultString};
 use crate::ast::ASTString;
-use crate::equation::errors::EmptyEquationError;
-use crate::token::{Token, TokenNameList, TokenParser};
+use crate::equation::error::types::EmptyEquationError;
+use crate::token::{Token, TokenNameList, TokenParser, TokenRenderable};
 
 #[derive(Debug)]
 pub struct Equation {
@@ -26,6 +26,10 @@ impl Equation {
 }
 
 impl EquationRenderable for Equation {
+	fn to_result_string(&self) -> EquationResultString {
+		EquationResultString::ok(&self.tokens)
+	}
+
 	fn to_token_name_list(&self) -> TokenNameList {
 		TokenNameList::new(&self.tokens)
 	}
