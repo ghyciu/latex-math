@@ -1,11 +1,13 @@
 use crate::token::{Token, TokenName, TokenRenderable};
 use std::fmt::{Display, Formatter, Result};
 
+/// A formatted list of token names.
 pub struct TokenNameList {
 	token_names: Vec<TokenName>
 }
 
 impl TokenNameList {
+	/// Creates a token name list from a token stream.
 	pub fn new(tokens: &Vec<Token>) -> TokenNameList {
 		let token_names: Vec<TokenName> = tokens.iter().map(|token| token.get_name()).collect();
 		TokenNameList { token_names }

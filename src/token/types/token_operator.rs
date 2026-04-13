@@ -2,11 +2,13 @@ use crate::token::types::TokenOperatorType;
 use crate::token::{TokenRenderable, TokenName, TokenValue};
 
 #[derive(Debug, Clone)]
+/// An operator token.
 pub struct TokenOperator {
 	operator_type: TokenOperatorType,
 }
 
 impl TokenOperator {
+	/// Creates a new operator token.
 	pub fn new(operator_type: TokenOperatorType) -> TokenOperator {
 		TokenOperator { operator_type }
 	}

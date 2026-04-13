@@ -1,9 +1,11 @@
 use crate::token::{TokenRenderable, TokenName, TokenValue};
 
+/// A numeric token.
 #[derive(Debug, Clone)]
 pub struct TokenNumber(String);
 
 impl TokenNumber {
+	/// Creates a new numeric token.
 	pub fn new(number: String) -> TokenNumber {
 		TokenNumber(number)
 	}

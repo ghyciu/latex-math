@@ -1,13 +1,18 @@
 use crate::token::Token;
 use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
 
+/// Converts a character stream into tokens.
+///
+/// The parser recognizes numeric literals and operator characters.
 pub struct TokenParser;
 
 impl TokenParser {
+	/// Creates a new token parser.
 	pub fn new() -> TokenParser {
 		TokenParser
 	}
 
+	/// Tokenizes a character stream into a list of tokens.
 	pub fn tokenize(&self, chars: Vec<char>) -> Vec<Token> {
 		let mut tokens: Vec<Token> = Vec::new();
 		let mut i: usize = 0;

@@ -1,7 +1,9 @@
 use std::fmt::Display;
 
 #[derive(Debug, Clone)]
+/// Kinds of operator tokens recognized by the tokenizer.
 pub enum TokenOperatorType {
+	/// Addition operator.
 	Add,
 }
 

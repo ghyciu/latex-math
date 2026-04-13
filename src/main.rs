@@ -1,3 +1,11 @@
+//! Command-line interface for the LaTeX Math crate.
+//!
+//! The binary accepts an equation as a command-line argument, parses it,
+//! and prints:
+//! - the parse result
+//! - the token list
+//! - the AST representation
+
 use latex_math::equation::{Equation, EquationRenderable, EquationResult};
 use std::env::args;
 

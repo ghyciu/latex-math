@@ -1,12 +1,13 @@
 //! Concrete AST node implementations.
 //!
-//! This module contains the built-in node types used by the AST:
-//! - binary operator nodes
-//! - unary operator nodes
-//! - numeric literal nodes
+//! This module contains the built-in node types used to represent parsed
+//! expressions in the AST.
 //!
-//! These types are re-exported for convenient access through the parent
-//! `ast` module.
+//! ## Re-exported Types
+//!
+//! - [`ASTNodeBinary`] — binary operator node
+//! - [`ASTNodeNumber`] — numeric literal node
+//! - [`ASTNodeUnary`] — unary operator node
 
 mod ast_node_binary;
 mod ast_node_number;

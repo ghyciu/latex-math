@@ -1,12 +1,12 @@
 //! Token definitions and parsing utilities.
 //!
 //! This module contains the token model used by the parser, along with helper
-//! traits and parsing support.
+//! traits and token parsing support.
 //!
 //! ## Re-exported Types
 //!
 //! - [`Token`] — general token type
-//! - [`TokenNameList`] — collection of token names
+//! - [`TokenNameList`] — formatted list of token names
 //! - [`TokenName`] — token name wrapper
 //! - [`TokenValue`] — token value wrapper
 //! - [`TokenParser`] — parser for converting text into tokens
