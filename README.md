@@ -1,6 +1,17 @@
 # latex-math
 
+[![](https://img.shields.io/crates/v/latex-math?style=for-the-badge&cacheSeconds=3600)](https://crates.io/crates/latex-math)
+[![](https://img.shields.io/docsrs/latex-math?style=for-the-badge&cacheSeconds=3600)](https://docs.rs/latex-math/0.1.1/latex_math/)
+![](https://img.shields.io/crates/l/latex-math?style=for-the-badge&cacheSeconds=3600)
+
+[![](https://img.shields.io/github/stars/ghyciu/latex-math?style=for-the-badge&cacheSeconds=3600)](https://github.com/ghyciu/latex-math)
+![](https://img.shields.io/crates/d/latex-math?style=for-the-badge&cacheSeconds=3600)
+
 A Rust crate and command-line tool for parsing and rendering LaTeX-style math expressions.
+
+### ⭐ Support
+
+This crate is simply a passion project and my way of learning Rust. If you like this project or would like to contribute in the future, please consider starring **[this repository](https://github.com/ghyciu/latex-math)** on GitHub. You may also consider visiting [my profile](https://github.com/ghyciu) on GitHub and following me for my other projects or to keep updated with the latest releases. Thank you very much for your support and your continued interest in the project keeps me going.
 
 ## Features
 
@@ -39,7 +50,6 @@ BinaryOperator(+)
 │   ├── Number(1)
 │   └── Number(2)
 └── Number(3)
-
 ```
 
 ## Output
