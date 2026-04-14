@@ -40,9 +40,9 @@ impl<'a> ASTParser<'a> {
 					let operator = self.next().unwrap();
 					let right = self.parse_factor();
 					ast_node = ASTNode::Binary(ASTNodeBinary::new(
-						Box::new(ast_node),
+						ast_node,
 						operator,
-						Box::new(right),
+						right,
 					))
 				}
 				_ => break,

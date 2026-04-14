@@ -26,11 +26,12 @@ impl ASTNodeBinary {
 	/// # Returns
 	///
 	/// A new [`ASTNodeBinary`] instance.
-	pub fn new(left: Box<ASTNode>, operator: Token, right: Box<ASTNode>) -> ASTNodeBinary {
+	pub fn new<L, T, R>(left: L, operator: T, right: R) -> ASTNodeBinary
+	where L: Into<ASTNode>, T: Into<Token>, R: Into<ASTNode> {
 		ASTNodeBinary {
-			left,
-			operator,
-			right,
+			left: Box::new(left.into()),
+			operator: operator.into(),
+			right: Box::new(right.into())
 		}
 	}
 
@@ -53,5 +54,33 @@ impl ASTNodeRenderable for ASTNodeBinary {
 	fn get_name(&self) -> ASTNodeName {
 		let node_name: String = format!("BinaryOperator({})", self.operator.get_value());
 		ASTNodeName::new(node_name)
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::ast::ASTNodeRenderable;
+	use crate::ast::node_types::ASTNodeNumber;
+	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+
+	#[test]
+	fn get_name_formats_binary_operator() {
+		let left = ASTNodeNumber::new(TokenNumber::new("1"));
+		let right = ASTNodeNumber::new(TokenNumber::new("2"));
+		let node = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
+		let name = node.get_name();
+
+		assert_eq!(name.to_string(), "BinaryOperator(+)");
+	}
+
+	#[test]
+	fn get_left_and_right_return_children() {
+		let left = ASTNodeNumber::new(TokenNumber::new("1"));
+		let right = ASTNodeNumber::new(TokenNumber::new("2"));
+		let node = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
+
+		assert_eq!(node.get_left().get_name().to_string(), "Number(1)");
+		assert_eq!(node.get_right().get_name().to_string(), "Number(2)");
 	}
 }

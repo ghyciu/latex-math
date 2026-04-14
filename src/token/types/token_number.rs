@@ -6,8 +6,8 @@ pub struct TokenNumber(String);
 
 impl TokenNumber {
 	/// Creates a new numeric token.
-	pub fn new(number: String) -> TokenNumber {
-		TokenNumber(number)
+	pub fn new<T: Into<String>>(number: T) -> TokenNumber {
+		TokenNumber(number.into())
 	}
 
 	pub fn get(&self) -> &String {

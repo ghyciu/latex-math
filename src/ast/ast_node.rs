@@ -19,6 +19,12 @@ pub enum ASTNode {
 	Unary(ASTNodeUnary)
 }
 
+impl From<ASTNodeNumber> for ASTNode {
+	fn from(number: ASTNodeNumber) -> ASTNode {
+		ASTNode::Number(number)
+	}
+}
+
 impl ASTNode {
 	/// Converts the node into a formatted tree-like AST string.
 	pub fn to_ast_node_string(&self) -> ASTNodeString<'_> {
