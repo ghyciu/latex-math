@@ -50,3 +50,48 @@ impl EquationRenderable for Equation {
 		ASTString::new(&self.tokens)
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_returns_error_for_empty_input() {
+		let result: EquationResult = Equation::new("");
+		const EXPECTED_ERROR: &str = "\x1b[48;5;203m\x1b[38;5;255m\x1b[1m ERROR \
+		\x1b[0m \x1b[40m\x1b[38;5;203mEmptyEquationError\x1b[0m: Equation cannot be empty";
+
+		assert_eq!(result.to_string(), EXPECTED_ERROR);
+	}
+
+	#[test]
+	fn new_trims_whitespace_before_tokenizing() {
+		let result: EquationResult = Equation::new("1+2");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn to_token_name_list_formats_token_names() {
+		let equation: Equation = Equation::new("1+2").unwrap();
+		const EXPECTED_TOKEN_NAME_LIST: &str = "\
+			Number(1)\n\
+			Operator(+)\n\
+			Number(2)\n\
+			";
+
+		assert_eq!(equation.to_token_name_list().to_string(), EXPECTED_TOKEN_NAME_LIST);
+	}
+
+	#[test]
+	fn to_ast_string_produces_ast_output() {
+		let equation: Equation = Equation::new(&"1+2".to_string()).unwrap();
+		const EXPECTED_AST_STRING: &str = "\
+			BinaryOperator(+)\n\
+			├── Number(1)\n\
+			└── Number(2)\n\
+			";
+		assert_eq!(equation.to_ast_string().to_string(), EXPECTED_AST_STRING);
+	}
+}
