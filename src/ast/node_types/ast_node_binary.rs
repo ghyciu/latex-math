@@ -66,12 +66,12 @@ mod tests {
 	use super::*;
 	use crate::ast::ASTNodeRenderable;
 	use crate::ast::node_types::ASTNodeNumber;
-	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+	use crate::token::types::{TokenOperator, TokenOperatorType};
 
 	#[test]
 	fn get_name_formats_binary_operator() {
-		let left = ASTNodeNumber::new(TokenNumber::new("1"));
-		let right = ASTNodeNumber::new(TokenNumber::new("2"));
+		let left = ASTNodeNumber::new("1");
+		let right = ASTNodeNumber::new("2");
 		let node = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
 		let name = node.get_name();
 
@@ -80,8 +80,8 @@ mod tests {
 
 	#[test]
 	fn get_left_and_right_return_children() {
-		let left = ASTNodeNumber::new(TokenNumber::new("1"));
-		let right = ASTNodeNumber::new(TokenNumber::new("2"));
+		let left = ASTNodeNumber::new("1");
+		let right = ASTNodeNumber::new("2");
 		let node = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
 
 		assert_eq!(node.get_left().get_name().to_string(), "Number(1)");

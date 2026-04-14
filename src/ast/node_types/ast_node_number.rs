@@ -36,11 +36,10 @@ impl ASTNodeRenderable for ASTNodeNumber {
 mod tests {
 	use super::*;
 	use crate::ast::ASTNodeRenderable;
-	use crate::token::types::TokenNumber;
 
 	#[test]
 	fn get_name_formats_numeric_literal() {
-		let node = ASTNodeNumber::new(TokenNumber::new("1"));
+		let node = ASTNodeNumber::new("1");
 		let name = node.get_name();
 
 		assert_eq!(name.to_string(), "Number(1)");

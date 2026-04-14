@@ -54,7 +54,7 @@ impl<'a> ASTParser<'a> {
 				let operand = self.parse_factor();
 				ASTNode::Unary(ASTNodeUnary::new(
 					Token::Operator(_operator),
-					Box::new(operand),
+					operand,
 				))
 			}
 			_ => panic!(),

@@ -23,10 +23,14 @@ impl ASTNodeUnary {
 	/// # Returns
 	///
 	/// A new [`ASTNodeUnary`] instance.
-	pub fn new<T: Into<Token>>(operator: T, operand: Box<ASTNode>) -> ASTNodeUnary {
+	pub fn new<T, U>(operator: T, operand: U) -> ASTNodeUnary
+	where
+		T: Into<Token>,
+		U: Into<ASTNode>,
+	{
 		ASTNodeUnary {
 			operator: operator.into(),
-			operand,
+			operand: Box::new(operand.into()),
 		}
 	}
 
@@ -52,11 +56,11 @@ mod tests {
 	use super::*;
 	use crate::ast::ASTNodeRenderable;
 	use crate::ast::node_types::ASTNodeNumber;
-	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+	use crate::token::types::{TokenOperator, TokenOperatorType};
 
 	#[test]
 	fn get_name_formats_unary_operator() {
-		let operand = Box::new(ASTNode::Number(ASTNodeNumber::new(TokenNumber::new("1"))));
+		let operand = ASTNodeNumber::new("1");
 		let node = ASTNodeUnary::new(TokenOperator::new(TokenOperatorType::Add), operand);
 		let name = node.get_name();
 
@@ -65,7 +69,7 @@ mod tests {
 
 	#[test]
 	fn get_child_returns_operand() {
-		let operand = Box::new(ASTNode::Number(ASTNodeNumber::new(TokenNumber::new("1"))));
+		let operand = ASTNodeNumber::new("1");
 		let node = ASTNodeUnary::new(TokenOperator::new(TokenOperatorType::Add), operand);
 
 		assert_eq!(node.get_child().get_name().to_string(), "Number(1)");

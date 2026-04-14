@@ -15,6 +15,12 @@ impl TokenNumber {
 	}
 }
 
+impl From<&str> for TokenNumber {
+	fn from(number: &str) -> TokenNumber {
+		TokenNumber(number.to_string())
+	}
+}
+
 impl TokenRenderable for TokenNumber {
 	fn get_value(&self) -> TokenValue {
 		TokenValue::new(self.get().clone())
