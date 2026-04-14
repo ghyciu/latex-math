@@ -13,6 +13,12 @@ pub enum Token {
 	Operator(TokenOperator),
 }
 
+impl From<TokenNumber> for Token {
+	fn from(number: TokenNumber) -> Self {
+		Token::Number(number)
+	}
+}
+
 impl From<TokenOperator> for Token {
 	fn from(operator: TokenOperator) -> Self {
 		Token::Operator(operator)

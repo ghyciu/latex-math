@@ -47,3 +47,46 @@ impl Display for ASTNodeStringPrefix {
 		Ok(())
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_creates_empty_prefix() {
+		let prefix = ASTNodeStringPrefix::new();
+
+		assert!(prefix.is_empty());
+		assert_eq!(prefix.to_string(), "");
+	}
+
+	#[test]
+	fn child_appends_last_branch_marker() {
+		let prefix = ASTNodeStringPrefix::new().child(true);
+
+		assert!(!prefix.is_empty());
+		assert_eq!(prefix.to_string(), "└── ");
+	}
+
+	#[test]
+	fn child_appends_non_last_branch_marker() {
+		let prefix = ASTNodeStringPrefix::new().child(false);
+
+		assert!(!prefix.is_empty());
+		assert_eq!(prefix.to_string(), "├── ");
+	}
+
+	#[test]
+	fn nested_prefix_renders_intermediate_vertical_line() {
+		let prefix = ASTNodeStringPrefix::new().child(false).child(true);
+
+		assert_eq!(prefix.to_string(), "│   └── ");
+	}
+
+	#[test]
+	fn nested_prefix_renders_intermediate_spacing_for_last_branch() {
+		let prefix = ASTNodeStringPrefix::new().child(true).child(false);
+
+		assert_eq!(prefix.to_string(), "    ├── ");
+	}
+}

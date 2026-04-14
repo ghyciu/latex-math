@@ -61,3 +61,83 @@ impl<'a> ASTParser<'a> {
 		}
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+
+	fn token_from_number(value: &str) -> Token {
+		Token::Number(TokenNumber::new(value))
+	}
+
+	fn token_from_operator(value: TokenOperatorType) -> Token {
+		Token::Operator(TokenOperator::new(value))
+	}
+
+	#[test]
+	fn parse_number_token_into_ast_node() {
+		let number_token: Token = token_from_number("1");
+
+		let tokens: Vec<Token> = vec![number_token];
+		let root: ASTNode = ASTParser::new(&tokens).parse();
+
+		assert_eq!(root.to_ast_node_string().to_string(), "Number(1)\n");
+	}
+
+	#[test]
+	fn parse_unary_operator_token_stream() {
+		let operator_token: Token = token_from_operator(TokenOperatorType::Add);
+		let number_token: Token = token_from_number("1");
+
+		// +1
+		let tokens: Vec<Token> = vec![operator_token, number_token];
+		let root: ASTNode = ASTParser::new(&tokens).parse();
+
+		const EXPECTED_AST: &str = "\
+		UnaryOperator(+)\n\
+		└── Number(1)\n\
+		";
+		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
+	}
+
+	#[test]
+	fn parse_binary_operator_token_stream() {
+		let operator_token: Token = token_from_operator(TokenOperatorType::Add);
+		let number_token_a: Token = token_from_number("1");
+		let number_token_b: Token = token_from_number("2");
+
+		// 1 + 2
+		let tokens: Vec<Token> = vec![number_token_a, operator_token, number_token_b];
+		let root: ASTNode = ASTParser::new(&tokens).parse();
+
+		const EXPECTED_AST: &str = "\
+		BinaryOperator(+)\n\
+		├── Number(1)\n\
+		└── Number(2)\n\
+		";
+		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
+	}
+
+	#[test]
+	fn parse_operator_chain_is_left_associative() {
+		let operator_token_a: Token = token_from_operator(TokenOperatorType::Add);
+		let operator_token_b: Token = token_from_operator(TokenOperatorType::Add);
+		let number_token_a: Token = token_from_number("1");
+		let number_token_b: Token = token_from_number("2");
+		let number_token_c: Token = token_from_number("3");
+
+		// 1 + 2 + 3
+		let tokens: Vec<Token> = vec![number_token_a, operator_token_a, number_token_b, operator_token_b, number_token_c];
+		let root: ASTNode = ASTParser::new(&tokens).parse();
+
+		const EXPECTED_AST: &str = "\
+			BinaryOperator(+)\n\
+			├── BinaryOperator(+)\n\
+			│   ├── Number(1)\n\
+			│   └── Number(2)\n\
+			└── Number(3)\n\
+			";
+		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
+	}
+}

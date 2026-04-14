@@ -15,3 +15,15 @@ impl Display for ASTNodeName {
 		write!(f, "{}", self.0)
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_stores_string_value() {
+		let name = ASTNodeName::new("Number(1)");
+
+		assert_eq!(name.to_string(), "Number(1)");
+	}
+}

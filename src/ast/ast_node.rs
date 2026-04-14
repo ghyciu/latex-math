@@ -42,3 +42,66 @@ impl ASTNodeRenderable for ASTNode {
 		}
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber, ASTNodeUnary};
+	use crate::ast::ASTNodeRenderable;
+	use crate::token::types::{TokenOperator, TokenOperatorType};
+
+	#[test]
+	fn from_number_creates_number_node() {
+		let node = ASTNode::from(ASTNodeNumber::new("1"));
+
+		assert_eq!(node.get_name().to_string(), "Number(1)");
+	}
+
+	#[test]
+	fn get_name_delegates_to_binary_node() {
+		let left = ASTNodeNumber::new("1");
+		let right = ASTNodeNumber::new("2");
+		let binary = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
+		let node = ASTNode::Binary(binary);
+
+		assert_eq!(node.get_name().to_string(), "BinaryOperator(+)");
+	}
+
+	#[test]
+	fn get_name_delegates_to_unary_node() {
+		let operand = ASTNodeNumber::new("1");
+		let unary = ASTNodeUnary::new(TokenOperator::new(TokenOperatorType::Add), operand);
+		let node = ASTNode::Unary(unary);
+
+		assert_eq!(node.get_name().to_string(), "UnaryOperator(+)");
+	}
+
+	#[test]
+	fn to_ast_node_string_formats_number_node() {
+		let node = ASTNode::from(ASTNodeNumber::new("1"));
+
+		assert_eq!(node.to_ast_node_string().to_string(), "Number(1)\n");
+	}
+
+	#[test]
+	fn to_ast_node_string_formats_binary_node() {
+		let left = ASTNodeNumber::new("1");
+		let right = ASTNodeNumber::new("2");
+		let binary = ASTNodeBinary::new(left, TokenOperator::new(TokenOperatorType::Add), right);
+		let node = ASTNode::Binary(binary);
+
+		assert_eq!(
+			node.to_ast_node_string().to_string(),
+			"BinaryOperator(+)\n├── Number(1)\n└── Number(2)\n"
+		);
+	}
+
+	#[test]
+	fn to_ast_node_string_formats_unary_node() {
+		let operand = ASTNodeNumber::new("1");
+		let unary = ASTNodeUnary::new(TokenOperator::new(TokenOperatorType::Add), operand);
+		let node = ASTNode::Unary(unary);
+
+		assert_eq!(node.to_ast_node_string().to_string(), "UnaryOperator(+)\n└── Number(1)\n");
+	}
+}
