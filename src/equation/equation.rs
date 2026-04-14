@@ -1,54 +1,100 @@
-use crate::token::{Number, Token, TokenRenderable};
+use super::{EquationRenderable, EquationResult, EquationResultString};
+use crate::ast::ASTString;
+use crate::equation::error::types::EmptyEquationError;
+use crate::token::{Token, TokenNameList, TokenParser};
 
+/// A parsed mathematical equation.
+///
+/// The equation stores its tokenized representation and can produce
+/// formatted token, result, and AST output.
 #[derive(Debug)]
 pub struct Equation {
-	tokens: Vec<Token>
+	tokens: Vec<Token>,
 }
 
 impl Equation {
-	pub fn new(equation: String) -> Equation {
-		Equation {
-			tokens: Self::tokenize(equation)
+	/// Creates a new equation from an input string.
+	///
+	/// Empty or whitespace-only input returns an error result.
+	pub fn new<T: Into<String>>(equation: T) -> EquationResult {
+		let equation: String = equation.into().trim().to_string();
+
+		if equation.is_empty() {
+			return EquationResult::err(EmptyEquationError);
 		}
+
+		EquationResult::ok(Equation {
+			tokens: Equation::tokenize(equation),
+		})
 	}
 
 	fn tokenize(equation: String) -> Vec<Token> {
-		let mut tokens: Vec<Token> = Vec::new();
-		let chars: Vec<char> = equation.chars().collect();
-		let mut i: usize = 0;
+		let token_parser: TokenParser = TokenParser::new();
+		token_parser.tokenize(equation.chars().collect())
+	}
+}
 
-		while i < chars.len() {
-			let char: char = chars[i];
-			match char {
-				// Whitespace
-				char if char.is_whitespace() => {
-					i += 1;
-				}
-
-				// Number
-				char if char.is_ascii_digit() => {
-					let mut number_token: String = char.to_string();
-					i += 1;
-					while i < chars.len() && (chars[i].is_ascii_digit() || chars[i] == '.') {
-						number_token.push(chars[i]);
-						i += 1;
-					}
-					tokens.push(Token::Number(Number::new(number_token)))
-				}
-
-				// Miscellaneous
-				_ => {
-					i += 1;
-				}
-			}
-		}
-
-		return tokens;
+impl EquationRenderable for Equation {
+	/// Returns a formatted equation result string.
+	fn to_result_string(&self) -> EquationResultString {
+		EquationResultString::ok(&self.tokens)
 	}
 
-	pub fn print_tokens(&self) {
-		for token in &self.tokens {
-			println!("{}", token.as_token_string());
-		}
+	/// Returns the equation as a list of token names.
+	fn to_token_name_list(&self) -> TokenNameList {
+		TokenNameList::new(&self.tokens)
+	}
+
+	/// Returns the equation as a formatted AST string.
+	fn to_ast_string(&self) -> ASTString {
+		ASTString::new(&self.tokens)
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_returns_error_for_empty_input() {
+		let result: EquationResult = Equation::new("");
+		const EXPECTED_ERROR: &str = "\x1b[48;5;203m\x1b[38;5;255m\x1b[1m ERROR \
+		\x1b[0m \x1b[40m\x1b[38;5;203mEmptyEquationError\x1b[0m: Equation cannot be empty";
+
+		assert_eq!(result.to_string(), EXPECTED_ERROR);
+	}
+
+	#[test]
+	fn new_trims_whitespace_before_tokenizing() {
+		let result: EquationResult = Equation::new("1+2");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn to_token_name_list_formats_token_names() {
+		let equation: Equation = Equation::new("1+2").unwrap();
+		const EXPECTED_TOKEN_NAME_LIST: &str = "\
+			Number(1)\n\
+			Operator(+)\n\
+			Number(2)\n\
+			";
+
+		assert_eq!(
+			equation.to_token_name_list().to_string(),
+			EXPECTED_TOKEN_NAME_LIST
+		);
+	}
+
+	#[test]
+	fn to_ast_string_produces_ast_output() {
+		let equation: Equation = Equation::new(&"1+2".to_string()).unwrap();
+		const EXPECTED_AST_STRING: &str = "\
+			BinaryOperator(+)\n\
+			├── Number(1)\n\
+			└── Number(2)\n\
+			";
+		assert_eq!(equation.to_ast_string().to_string(), EXPECTED_AST_STRING);
 	}
 }

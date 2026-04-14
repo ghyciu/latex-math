@@ -1,8 +1,9 @@
 [package]
-name = "latex-equation"
-version = "0.1.0"
+name = "latex-math"
+version = "0.1.1"
 edition = "2024"
 authors = ["ghyciu"]
-description = "Command-line interface (CLI) tool for processing LaTeX equations"
+description = "Command-line interface (CLI) tool and library for parsing and representing mathematical expressions"
+license = "MIT"
 
 [dependencies]
