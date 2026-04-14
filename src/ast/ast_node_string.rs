@@ -21,7 +21,8 @@ impl<'a> Display for ASTNodeString<'a> {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 		match &self.node {
 			ASTNode::Number(number) => {
-				write!(f, "{}{}\n", self.prefix, number.get_name()).expect("Unable to generate ASTNodeNumber");
+				write!(f, "{}{}\n", self.prefix, number.get_name())
+					.expect("Unable to generate ASTNodeNumber");
 			}
 			ASTNode::Binary(binary) => {
 				let left_string: ASTNodeString =
@@ -35,12 +36,14 @@ impl<'a> Display for ASTNodeString<'a> {
 					binary.get_name(),
 					left_string,
 					right_string
-				).expect("Unable to generate ASTNodeBinary");
+				)
+				.expect("Unable to generate ASTNodeBinary");
 			}
 			ASTNode::Unary(unary) => {
 				let child_string: ASTNodeString =
 					ASTNodeString::new(self.prefix.child(true), unary.get_child());
-				write!(f, "{}{}\n{}", self.prefix, unary.get_name(), child_string).expect("Unable to generate ASTNodeUnary");
+				write!(f, "{}{}\n{}", self.prefix, unary.get_name(), child_string)
+					.expect("Unable to generate ASTNodeUnary");
 			}
 		}
 		Ok({})
@@ -71,7 +74,10 @@ mod tests {
 
 		let rendered = ASTNodeString::new(ASTNodeStringPrefix::new(), &node).to_string();
 
-		assert_eq!(rendered, "BinaryOperator(+)\n├── Number(1)\n└── Number(2)\n");
+		assert_eq!(
+			rendered,
+			"BinaryOperator(+)\n├── Number(1)\n└── Number(2)\n"
+		);
 	}
 
 	#[test]
@@ -89,10 +95,18 @@ mod tests {
 	fn formats_nested_binary_tree() {
 		let inner_left = ASTNodeNumber::new("1");
 		let inner_right = ASTNodeNumber::new("2");
-		let inner = ASTNodeBinary::new(inner_left, TokenOperator::new(TokenOperatorType::Add), inner_right);
+		let inner = ASTNodeBinary::new(
+			inner_left,
+			TokenOperator::new(TokenOperatorType::Add),
+			inner_right,
+		);
 
 		let outer_right = ASTNodeNumber::new("3");
-		let outer = ASTNodeBinary::new(ASTNode::Binary(inner), TokenOperator::new(TokenOperatorType::Add), outer_right);
+		let outer = ASTNodeBinary::new(
+			ASTNode::Binary(inner),
+			TokenOperator::new(TokenOperatorType::Add),
+			outer_right,
+		);
 		let node = ASTNode::Binary(outer);
 
 		let rendered = ASTNodeString::new(ASTNodeStringPrefix::new(), &node).to_string();

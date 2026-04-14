@@ -52,10 +52,7 @@ impl<'a> ASTParser<'a> {
 			Some(Token::Number(number)) => ASTNode::Number(ASTNodeNumber::new(number)),
 			Some(Token::Operator(_operator)) => {
 				let operand = self.parse_factor();
-				ASTNode::Unary(ASTNodeUnary::new(
-					Token::Operator(_operator),
-					operand,
-				))
+				ASTNode::Unary(ASTNodeUnary::new(Token::Operator(_operator), operand))
 			}
 			_ => panic!(),
 		}
@@ -95,9 +92,9 @@ mod tests {
 		let root: ASTNode = ASTParser::new(&tokens).parse();
 
 		const EXPECTED_AST: &str = "\
-		UnaryOperator(+)\n\
-		└── Number(1)\n\
-		";
+			UnaryOperator(+)\n\
+			└── Number(1)\n\
+			";
 		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
 	}
 
@@ -112,10 +109,10 @@ mod tests {
 		let root: ASTNode = ASTParser::new(&tokens).parse();
 
 		const EXPECTED_AST: &str = "\
-		BinaryOperator(+)\n\
-		├── Number(1)\n\
-		└── Number(2)\n\
-		";
+			BinaryOperator(+)\n\
+			├── Number(1)\n\
+			└── Number(2)\n\
+			";
 		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
 	}
 
@@ -128,7 +125,13 @@ mod tests {
 		let number_token_c: Token = token_from_number("3");
 
 		// 1 + 2 + 3
-		let tokens: Vec<Token> = vec![number_token_a, operator_token_a, number_token_b, operator_token_b, number_token_c];
+		let tokens: Vec<Token> = vec![
+			number_token_a,
+			operator_token_a,
+			number_token_b,
+			operator_token_b,
+			number_token_c,
+		];
 		let root: ASTNode = ASTParser::new(&tokens).parse();
 
 		const EXPECTED_AST: &str = "\
@@ -139,5 +142,23 @@ mod tests {
 			└── Number(3)\n\
 			";
 		assert_eq!(root.to_ast_node_string().to_string(), EXPECTED_AST);
+	}
+
+	#[test]
+	#[should_panic]
+	fn parse_empty_token_stream_panics() {
+		let tokens: Vec<Token> = vec![];
+		let _root: ASTNode = ASTParser::new(&tokens).parse();
+	}
+
+	#[test]
+	#[should_panic]
+	fn parse_trailing_operator_panics() {
+		let operator_token: Token = token_from_operator(TokenOperatorType::Add);
+		let number_token: Token = token_from_number("1");
+
+		// 1 +
+		let tokens: Vec<Token> = vec![number_token, operator_token];
+		let _root: ASTNode = ASTParser::new(&tokens).parse();
 	}
 }

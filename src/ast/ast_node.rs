@@ -46,8 +46,8 @@ impl ASTNodeRenderable for ASTNode {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber, ASTNodeUnary};
 	use crate::ast::ASTNodeRenderable;
+	use crate::ast::node_types::{ASTNodeBinary, ASTNodeNumber, ASTNodeUnary};
 	use crate::token::types::{TokenOperator, TokenOperatorType};
 
 	#[test]
@@ -102,6 +102,9 @@ mod tests {
 		let unary = ASTNodeUnary::new(TokenOperator::new(TokenOperatorType::Add), operand);
 		let node = ASTNode::Unary(unary);
 
-		assert_eq!(node.to_ast_node_string().to_string(), "UnaryOperator(+)\n└── Number(1)\n");
+		assert_eq!(
+			node.to_ast_node_string().to_string(),
+			"UnaryOperator(+)\n└── Number(1)\n"
+		);
 	}
 }
