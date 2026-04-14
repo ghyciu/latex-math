@@ -15,3 +15,14 @@ impl Display for TokenName {
 		write!(f, "{}", self.0)
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_displays_input_string() {
+		let name: TokenName = TokenName::new("Number(1)");
+		assert_eq!(name.to_string(), "Number(1)");
+	}
+}

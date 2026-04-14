@@ -22,3 +22,24 @@ impl Display for TokenNameList {
 		Ok({})
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+
+	#[test]
+	fn token_list_renders_each_name_on_its_own_line() {
+		let token_number: Token = TokenNumber::new("1").into();
+		let token_operator: Token = TokenOperator::new(TokenOperatorType::Add).into();
+
+		let tokens: Vec<Token> = vec![token_number, token_operator];
+		let token_names: TokenNameList = TokenNameList::new(&tokens);
+		const EXPECTED_TOKEN_NAME_LIST: &str = "\
+			Number(1)\n\
+			Operator(+)\n\
+			";
+
+		assert_eq!(token_names.to_string(), EXPECTED_TOKEN_NAME_LIST);
+	}
+}

@@ -14,3 +14,13 @@ impl Display for TokenOperatorType {
 		}
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn add_displays_as_plus() {
+		assert_eq!(TokenOperatorType::Add.to_string(), "+");
+	}
+}

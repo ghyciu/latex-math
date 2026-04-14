@@ -42,3 +42,25 @@ impl TokenRenderable for Token {
 		}
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::token::types::{TokenNumber, TokenOperator, TokenOperatorType};
+
+	#[test]
+	fn number_token_converts_from_token_number() {
+		let token: Token = TokenNumber::new("1").into();
+
+		assert_eq!(token.get_value().to_string(), "1");
+		assert_eq!(token.get_name().to_string(), "Number(1)");
+	}
+
+	#[test]
+	fn operator_token_converts_from_token_operator() {
+		let token: Token = TokenOperator::new(TokenOperatorType::Add).into();
+
+		assert_eq!(token.get_value().to_string(), "+");
+		assert_eq!(token.get_name().to_string(), "Operator(+)");
+	}
+}

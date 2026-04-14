@@ -81,7 +81,10 @@ mod tests {
 			Number(2)\n\
 			";
 
-		assert_eq!(equation.to_token_name_list().to_string(), EXPECTED_TOKEN_NAME_LIST);
+		assert_eq!(
+			equation.to_token_name_list().to_string(),
+			EXPECTED_TOKEN_NAME_LIST
+		);
 	}
 
 	#[test]

@@ -21,9 +21,8 @@ mod tests {
 	use super::*;
 
 	#[test]
-	fn new_stores_string_value() {
-		let name = ASTNodeName::new("Number(1)");
-
+	fn new_displays_input_string() {
+		let name: ASTNodeName = ASTNodeName::new("Number(1)");
 		assert_eq!(name.to_string(), "Number(1)");
 	}
 }

@@ -15,3 +15,14 @@ impl Display for TokenValue {
 		write!(f, "{}", self.0)
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn new_displays_input_string() {
+		let value: TokenValue = TokenValue::new("1");
+		assert_eq!(value.to_string(), "1");
+	}
+}

@@ -29,3 +29,20 @@ impl TokenRenderable for TokenOperator {
 		TokenName::new(format!("Operator({})", self.get_value().to_string()))
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn add_operator_renders_as_plus() {
+		let token: TokenOperator = TokenOperator::new(TokenOperatorType::Add);
+		assert_eq!(token.get_value().to_string(), "+");
+	}
+
+	#[test]
+	fn add_operator_name_uses_rendered_value() {
+		let token: TokenOperator = TokenOperator::new(TokenOperatorType::Add);
+		assert_eq!(token.get_name().to_string(), "Operator(+)");
+	}
+}
