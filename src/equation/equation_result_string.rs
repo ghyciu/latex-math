@@ -33,3 +33,30 @@ impl Display for EquationResultString {
 		write!(f, "{}", self.0)
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::token::types::TokenNumber;
+
+	#[test]
+	fn ok_formats_equation_result_string_from_tokens() {
+		let number_token: Token = Token::from(TokenNumber::new("1"));
+		let tokens = vec![number_token];
+
+		let string: String = EquationResultString::ok(&tokens).to_string();
+		const EXPECTED_STRING: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1";
+
+		assert_eq!(string, EXPECTED_STRING);
+	}
+
+	#[test]
+	fn err_formats_equation_result_string_for_error() {
+		let string: String =
+			EquationResultString::err("EmptyEquationError", "Equation cannot be empty").to_string();
+		const EXPECTED_STRING: &str = "\x1b[48;5;203m\x1b[38;5;255m\x1b[1m ERROR \
+		\x1b[0m \x1b[40m\x1b[38;5;203mEmptyEquationError\x1b[0m: Equation cannot be empty";
+
+		assert_eq!(string, EXPECTED_STRING);
+	}
+}

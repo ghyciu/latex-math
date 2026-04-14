@@ -33,3 +33,37 @@ impl EquationErrorRenderable for EquationError {
 		}
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+
+	#[test]
+	fn from_empty_equation_error_wraps_variant() {
+		let equation_error: EquationError = EmptyEquationError.into();
+
+		match equation_error {
+			EquationError::EmptyEquationError(_) => {}
+		}
+	}
+
+	#[test]
+	fn display_delegates_to_inner_error() {
+		let equation_error: EquationError = EquationError::from(EmptyEquationError);
+
+		assert_eq!(equation_error.to_string(), "Equation cannot be empty");
+	}
+
+	#[test]
+	fn to_result_string_delegates_to_inner_error() {
+		let equation_error: EquationError = EquationError::from(EmptyEquationError);
+
+		const EXPECTED_ERROR: &str = "\x1b[48;5;203m\x1b[38;5;255m\x1b[1m ERROR \x1b[0m \x1b[40m\
+		\x1b[38;5;203mEmptyEquationError\x1b[0m: Equation cannot be empty";
+
+		assert_eq!(
+			equation_error.to_result_string().to_string(),
+			EXPECTED_ERROR
+		);
+	}
+}

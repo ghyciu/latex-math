@@ -16,11 +16,13 @@ impl Equation {
 	/// Creates a new equation from an input string.
 	///
 	/// Empty or whitespace-only input returns an error result.
-	pub fn new(equation: &String) -> EquationResult {
-		let equation: String = equation.trim().to_string();
+	pub fn new<T: Into<String>>(equation: T) -> EquationResult {
+		let equation: String = equation.into().trim().to_string();
+
 		if equation.is_empty() {
 			return EquationResult::err(EmptyEquationError);
 		}
+
 		EquationResult::ok(Equation {
 			tokens: Equation::tokenize(equation),
 		})
