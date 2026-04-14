@@ -1,9 +1,12 @@
 [package]
 name = "latex-math"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 authors = ["ghyciu"]
 description = "Command-line interface (CLI) tool and library for parsing and representing mathematical expressions"
 license = "MIT"
+repository = "https://github.com/ghyciu/latex-math"
+keywords = ["latex", "math", "equation", "tokenizer", "mathematics"]
+categories = ["command-line-utilities", "command-line-interface", "encoding", "mathematics", "parsing"]
 
 [dependencies]
