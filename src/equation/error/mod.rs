@@ -12,9 +12,9 @@
 //!
 //! - [`types`] — concrete error types
 
-pub mod types;
 mod equation_error;
 mod equation_error_renderable;
+pub mod types;
 
 pub use equation_error::EquationError;
 pub use equation_error_renderable::EquationErrorRenderable;

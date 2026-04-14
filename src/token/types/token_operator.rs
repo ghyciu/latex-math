@@ -1,5 +1,5 @@
 use crate::token::types::TokenOperatorType;
-use crate::token::{TokenRenderable, TokenName, TokenValue};
+use crate::token::{TokenName, TokenRenderable, TokenValue};
 
 #[derive(Debug, Clone)]
 /// An operator token.

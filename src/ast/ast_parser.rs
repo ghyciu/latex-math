@@ -39,11 +39,7 @@ impl<'a> ASTParser<'a> {
 				Token::Operator(_) => {
 					let operator = self.next().unwrap();
 					let right = self.parse_factor();
-					ast_node = ASTNode::Binary(ASTNodeBinary::new(
-						ast_node,
-						operator,
-						right,
-					))
+					ast_node = ASTNode::Binary(ASTNodeBinary::new(ast_node, operator, right))
 				}
 				_ => break,
 			}
@@ -53,12 +49,13 @@ impl<'a> ASTParser<'a> {
 
 	fn parse_factor(&mut self) -> ASTNode {
 		match self.next() {
-			Some(Token::Number(number)) => {
-				ASTNode::Number(ASTNodeNumber::new(number))
-			},
+			Some(Token::Number(number)) => ASTNode::Number(ASTNodeNumber::new(number)),
 			Some(Token::Operator(_operator)) => {
 				let operand = self.parse_factor();
-				ASTNode::Unary(ASTNodeUnary::new(Token::Operator(_operator), Box::new(operand)))
+				ASTNode::Unary(ASTNodeUnary::new(
+					Token::Operator(_operator),
+					Box::new(operand),
+				))
 			}
 			_ => panic!(),
 		}

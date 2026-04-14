@@ -26,7 +26,7 @@ impl ASTNodeUnary {
 	pub fn new<T: Into<Token>>(operator: T, operand: Box<ASTNode>) -> ASTNodeUnary {
 		ASTNodeUnary {
 			operator: operator.into(),
-			operand
+			operand,
 		}
 	}
 

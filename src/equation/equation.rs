@@ -22,7 +22,7 @@ impl Equation {
 			return EquationResult::err(EmptyEquationError);
 		}
 		EquationResult::ok(Equation {
-			tokens: Equation::tokenize(equation)
+			tokens: Equation::tokenize(equation),
 		})
 	}
 

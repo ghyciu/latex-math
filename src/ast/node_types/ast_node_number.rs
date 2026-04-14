@@ -1,5 +1,5 @@
 use crate::ast::{ASTNodeName, ASTNodeRenderable};
-use crate::token::{TokenRenderable};
+use crate::token::TokenRenderable;
 use crate::token::types::TokenNumber;
 
 /// An AST node representing a numeric literal.

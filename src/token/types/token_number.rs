@@ -1,4 +1,4 @@
-use crate::token::{TokenRenderable, TokenName, TokenValue};
+use crate::token::{TokenName, TokenRenderable, TokenValue};
 
 /// A numeric token.
 #[derive(Debug, Clone)]

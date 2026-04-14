@@ -27,11 +27,15 @@ impl ASTNodeBinary {
 	///
 	/// A new [`ASTNodeBinary`] instance.
 	pub fn new<L, T, R>(left: L, operator: T, right: R) -> ASTNodeBinary
-	where L: Into<ASTNode>, T: Into<Token>, R: Into<ASTNode> {
+	where
+		L: Into<ASTNode>,
+		T: Into<Token>,
+		R: Into<ASTNode>,
+	{
 		ASTNodeBinary {
 			left: Box::new(left.into()),
 			operator: operator.into(),
-			right: Box::new(right.into())
+			right: Box::new(right.into()),
 		}
 	}
 

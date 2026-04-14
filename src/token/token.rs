@@ -1,4 +1,4 @@
-use super::{TokenRenderable, TokenName, TokenValue};
+use super::{TokenName, TokenRenderable, TokenValue};
 use crate::token::types::{TokenNumber, TokenOperator};
 
 /// A lexical token recognized by the parser.

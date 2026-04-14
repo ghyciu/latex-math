@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter, Result};
 
 /// A formatted list of token names.
 pub struct TokenNameList {
-	token_names: Vec<TokenName>
+	token_names: Vec<TokenName>,
 }
 
 impl TokenNameList {

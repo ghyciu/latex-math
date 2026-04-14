@@ -16,7 +16,7 @@ pub enum ASTNode {
 	Binary(ASTNodeBinary),
 
 	/// A unary operator node.
-	Unary(ASTNodeUnary)
+	Unary(ASTNodeUnary),
 }
 
 impl From<ASTNodeNumber> for ASTNode {

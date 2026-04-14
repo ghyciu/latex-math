@@ -1,7 +1,7 @@
-use std::fmt::{Debug, Display, Formatter};
-use std::error::Error;
-use super::super::{EquationErrorRenderable};
 use super::super::super::EquationResultString;
+use super::super::EquationErrorRenderable;
+use std::error::Error;
+use std::fmt::{Debug, Display, Formatter};
 
 /// Error returned when an equation input is empty.
 #[derive(Debug)]
