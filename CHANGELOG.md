@@ -8,15 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added a CHANGELOG file.
 
-## Changed
+### Changed
 - Updated the README file to include the Changelog, Documentation, and Repository links.
 
-## Fixes
+### Fixed
 - Passing equations with LaTeX math mode delimiters (i.e. `$$...$$`) now properly parses the equation instead of counting the delimiters as part of the equation.
 
 ## [0.1.2] - 2021-04-15
 
 ### Added
+- Initial release of the library and command-line tool.
 - Added support for parsing LaTeX-style math expressions.
 - Added basic functionality to display the list of tokens and the abstract syntax tree (AST) breakdown of each equation.
 

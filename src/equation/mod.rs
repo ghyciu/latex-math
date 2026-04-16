@@ -20,6 +20,7 @@ mod equation_renderable;
 mod equation_result;
 mod equation_result_string;
 pub mod error;
+mod utils;
 
 pub use equation::Equation;
 pub use equation_renderable::EquationRenderable;
