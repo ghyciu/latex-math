@@ -9,9 +9,27 @@
 
 A Rust crate and command-line tool for parsing and rendering LaTeX-style math expressions.
 
-### ⭐ Support
+## Changelog
 
-This crate is simply a passion project and my way of learning Rust. If you like this project or would like to contribute in the future, please consider starring **[this repository](https://github.com/ghyciu/latex-math)** on GitHub. You may also consider visiting [my profile](https://github.com/ghyciu) on GitHub and following me for my other projects or to keep updated with the latest releases. Thank you very much for your support and your continued interest in the project keeps me going.
+See the full changelog in [CHANGELOG.md](CHANGELOG.md).
+
+## Documentation
+
+See the full documentation in [docs.rs](https://docs.rs/latex-math).
+
+## Repository
+
+See the full repository in [GitHub](https://github.com/ghyciu/latex-math).
+
+## Installation
+
+```cargo install latex-math```
+
+Running the above command will install the `latex-math` binary in your system's PATH.
+
+```cargo add latex-math```
+
+Running the above command will add the `latex-math` crate to your `Cargo.toml` file. You may also add `latex-math = $VERSION_NUMBER` to your `Cargo.toml` file to pin the version of the crate.
 
 ## Features
 
@@ -73,3 +91,13 @@ Run the test suite with:
 - `src/equation/` — equation parsing and rendering
 - `src/token/` — token parsing and token types
 - `src/ast/` — AST parsing and AST types
+
+## Support
+
+This crate is simply a passion project and my way of learning Rust. If you like this project or would like to contribute in the future, please consider starring **[this repository](https://github.com/ghyciu/latex-math)** on GitHub. You may also consider visiting **[my profile](https://github.com/ghyciu)** on GitHub and following me for my other projects or to keep updated with the latest releases. Thank you very much for your support and your continued interest in the project keeps me going.
+
+## License
+
+
+
+## Contributing
