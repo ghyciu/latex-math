@@ -17,9 +17,15 @@ impl Equation {
 	///
 	/// Empty or whitespace-only input returns an error result.
 	pub fn new<T: Into<String>>(equation: T) -> EquationResult {
-		let equation: String = equation.into().trim().to_string();
+		let mut equation: String = equation.into().trim().to_string();
 
 		if equation.is_empty() {
+			return EquationResult::err(EmptyEquationError);
+		}
+
+		equation = remove_math_mode_delimiters(equation);
+
+		if equation.trim().is_empty() {
 			return EquationResult::err(EmptyEquationError);
 		}
 
@@ -32,6 +38,58 @@ impl Equation {
 		let token_parser: TokenParser = TokenParser::new();
 		token_parser.tokenize(equation.chars().collect())
 	}
+}
+
+/// Removes supported LaTeX math-mode delimiters from the outside of an equation.
+///
+/// This keeps stripping matching wrappers until no more supported delimiters remain,
+/// so nested forms like `$$ \( 1+2 \) $$` are normalized correctly.
+fn remove_math_mode_delimiters(mut equation: String) -> String {
+	loop {
+		let trimmed = equation.trim();
+
+		let mut changed = false;
+
+		// \begin{math} ... \end{math}
+		let begin = r"\begin{math}";
+		let end = r"\end{math}";
+		if trimmed.starts_with(begin) && trimmed.ends_with(end) {
+			equation = trimmed[begin.len()..trimmed.len() - end.len()]
+				.trim()
+				.to_string();
+			changed = true;
+		}
+
+		// $$ ... $$
+		else if trimmed.starts_with("$$") && trimmed.ends_with("$$") && trimmed.len() >= 4 {
+			equation = trimmed[2..trimmed.len() - 2].trim().to_string();
+			changed = true;
+		}
+
+		// \( ... \)
+		else if trimmed.starts_with(r"\(") && trimmed.ends_with(r"\)") && trimmed.len() >= 4 {
+			equation = trimmed[2..trimmed.len() - 2].trim().to_string();
+			changed = true;
+		}
+
+		// \[ ... \]
+		else if trimmed.starts_with(r"\[") && trimmed.ends_with(r"\]") && trimmed.len() >= 4 {
+			equation = trimmed[2..trimmed.len() - 2].trim().to_string();
+			changed = true;
+		}
+
+		// $ ... $
+		else if trimmed.starts_with('$') && trimmed.ends_with('$') && trimmed.len() >= 2 {
+			equation = trimmed[1..trimmed.len() - 1].trim().to_string();
+			changed = true;
+		}
+
+		if !changed {
+			break;
+		}
+	}
+
+	equation
 }
 
 impl EquationRenderable for Equation {
@@ -70,6 +128,55 @@ mod tests {
 		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
 
 		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_removes_inline_math_delimiters() {
+		let result: EquationResult = Equation::new(r"\( 1+2 \)");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_removes_display_math_delimiters() {
+		let result: EquationResult = Equation::new("$$ 1+2 $$");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_removes_nested_math_delimiters() {
+		let result: EquationResult = Equation::new("$$ \\( 1+2 \\) $$");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_removes_begin_end_math_delimiters() {
+		let result: EquationResult = Equation::new(r"\begin{math} 1+2 \end{math}");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_removes_bracket_math_delimiters() {
+		let result: EquationResult = Equation::new(r"\[ 1+2 \]");
+		const EXPECTED_EQUATION: &str = "\x1b[48;5;34m\x1b[38;5;255m\x1b[1m EQUATION \x1b[0m 1+2";
+
+		assert_eq!(result.to_string(), EXPECTED_EQUATION);
+	}
+
+	#[test]
+	fn new_returns_error_when_removing_delimiters_results_in_empty_input() {
+		let result: EquationResult = Equation::new("$$$$");
+		const EXPECTED_ERROR: &str = "\x1b[48;5;203m\x1b[38;5;255m\x1b[1m ERROR \
+		\x1b[0m \x1b[40m\x1b[38;5;203mEmptyEquationError\x1b[0m: Equation cannot be empty";
+
+		assert_eq!(result.to_string(), EXPECTED_ERROR);
 	}
 
 	#[test]
